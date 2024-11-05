@@ -1,12 +1,10 @@
-# .github/workflows/superlinter.yml
-
 name: Lint Code Base
 
 on:
   push:
-    branches: [ main ]  # Ganti dengan nama branch yang ingin Anda lint
+    branches: [ main ]
   pull_request:
-    branches: [ main ]  # Ganti dengan nama branch yang ingin Anda lint
+    branches: [ main ]
 
 jobs:
   lint:
@@ -15,20 +13,9 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: '14'  # Versi Node.js yang dibutuhkan
-
       - name: Run Super Linter
-        uses: github/super-linter@v3
+        uses: github/super-linter@latest
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          DEFAULT_BRANCH: main  # Ganti dengan nama branch yang ingin Anda lint
-          LINTER_RULES_PATH: .github/linter-rules.yml # Jika menggunakan rules kustom
         with:
-          language: php, html, css  # Bahasa yang ingin Anda lint
-          # Jika Anda ingin menambahkan beberapa bahasa
-          # gunakan koma sebagai pemisah
-          # e.g. language: php, html, css, mysql
-          lint_mode: 'push'  # Atau 'pull_request' sesuai kebutuhan
+          entryPoint: "php, html, css"  # Tentukan bahasa yang ingin dilint
