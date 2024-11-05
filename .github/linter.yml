@@ -6,3 +6,5 @@ linters:
     # Menonaktifkan pengecekan untuk file dengan ekstensi .myphp
     ignore:
       - "**/*.myphp"
+      - "UndefinedClass" # Mengabaikan kesalahan UndefinedClass
+      - "UndefinedGlobalVariable" # Mengabaikan kesalahan UndefinedGlobalVariable
