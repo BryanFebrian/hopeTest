@@ -1,0 +1,8 @@
+# .github/linter.yml
+
+# Atur pengaturan linter
+linters:
+  php:
+    # Menonaktifkan pengecekan untuk file dengan ekstensi .myphp
+    ignore:
+      - "**/*.myphp"
