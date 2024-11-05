@@ -1,27 +1,18 @@
-name: Super-Linter
-
+name: Lint Code Base
 on: push
-
 jobs:
-  super-lint:
-    name: Lint code base
+  build:
+    name: Lint Code Base
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      # Setup PHP dengan ekstensi mysqli
-      - name: Setup PHP with required extensions
-        uses: shivammathur/setup-php@v2
+      - name: Checkout Code
+        uses: actions/checkout@v3
         with:
-          php-version: '8.1' # Sesuaikan dengan versi PHP yang Anda gunakan
-          extensions: mysqli
-
-      # Jalankan Super-Linter dengan mengabaikan jenis kesalahan tertentu
-      - name: Run Super-Linter
+          fetch-depth: 0
+      - name: Lint Code Base
         uses: github/super-linter@v4
         env:
-          DEFAULT_BRANCH: main
+          VALIDATE_ALL_CODEBASE: true
+          VALIDATE_HTML: true
+          VALIDATE_PHP: true
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          # Abaikan kesalahan terkait mysqli dan beberapa kesalahan PHP
-          INPUT_DISABLE_LINTING: 'php-UndefinedClass,php-mysqli,php-UndefinedGlobalVariable,php-UndefinedVariable,php-InvalidArgument'
