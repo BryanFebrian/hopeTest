@@ -1,21 +1,26 @@
-name: Lint Code Base
+---
+name: Super-Linter
 
-on:
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+on: push
 
 jobs:
-  lint:
+  super-lint:
+    name: Lint code base
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
+      - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Run Super Linter
-        uses: github/super-linter@latest
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      # Tambahkan langkah untuk menginstall PHP dan ekstensi mysqli
+      - name: Setup PHP with required extensions
+        uses: shivammathur/setup-php@v2
         with:
-          # Secara otomatis mendeteksi bahasa berdasarkan extensi file
+          php-version: '8.1' # Sesuaikan dengan versi PHP yang Anda gunakan
+          extensions: mysqli
+
+      # Jalankan Super-Linter
+      - name: Run Super-Linter
+        uses: github/super-linter@v4
+        env:
+          DEFAULT_BRANCH: main
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
