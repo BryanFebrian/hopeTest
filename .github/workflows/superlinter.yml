@@ -1,20 +1,34 @@
----
-name: Super-Linter
+# .github/workflows/superlinter.yml
 
-on: push
+name: Lint Code Base
+
+on:
+  push:
+    branches: [ main ]  # Ganti dengan nama branch yang ingin Anda lint
+  pull_request:
+    branches: [ main ]  # Ganti dengan nama branch yang ingin Anda lint
 
 jobs:
-  super-lint:
-    name: Lint code base
+  lint:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
+      - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Run Super-Linter
-        uses: github/super-linter@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'  # Versi Node.js yang dibutuhkan
+
+      - name: Run Super Linter
+        uses: github/super-linter@v3
         env:
-          DEFAULT_BRANCH: main
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          VALIDATE_PHP: true  # This ensures PHP is being linted
-          PHP_DEFAULT_STANDARD: PSR12  # You can set this based on your preferred standard
+          DEFAULT_BRANCH: main  # Ganti dengan nama branch yang ingin Anda lint
+          LINTER_RULES_PATH: .github/linter-rules.yml # Jika menggunakan rules kustom
+        with:
+          language: php, html, css  # Bahasa yang ingin Anda lint
+          # Jika Anda ingin menambahkan beberapa bahasa
+          # gunakan koma sebagai pemisah
+          # e.g. language: php, html, css, mysql
+          lint_mode: 'push'  # Atau 'pull_request' sesuai kebutuhan
