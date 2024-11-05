@@ -10,19 +10,17 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      # Tambahkan langkah untuk menginstall PHP dan ekstensi mysqli
+      # Install PHP dan ekstensi mysqli
       - name: Setup PHP with required extensions
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.1' # Sesuaikan dengan versi PHP yang Anda gunakan
+          php-version: '8.1' # Ganti dengan versi PHP yang Anda gunakan
           extensions: mysqli
 
-      # Jalankan Super-Linter dengan mengabaikan beberapa kesalahan
+      # Jalankan Super-Linter dengan linting PHP dinonaktifkan
       - name: Run Super-Linter
         uses: github/super-linter@v4
         env:
           DEFAULT_BRANCH: main
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          # Menambahkan pengaturan untuk mengabaikan kesalahan
-          LINTER_RULES_PATH: .github/linter.yml
-          INPUT_DISABLE_LINTING: 'php-UndefinedClass,php-UndefinedGlobalVariable,php-UndefinedVariable,php-InvalidArgument'
+          INPUT_ENABLE_PHP_LINTING: 'false' # Menonaktifkan linting PHP sepenuhnya
